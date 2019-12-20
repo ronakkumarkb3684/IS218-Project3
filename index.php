@@ -121,6 +121,35 @@ switch ($action) {
 
     }
 
+    case 'single_question':{
+        $userId = $_SESSION['userId'];
+        $questionId = filter_input(INPUT_GET, 'questionId');
+        $userId = filter_input(INPUT_GET, 'userId');
+        if ($questionId == NULL) {
+            $error = 'User Id unavailable';
+            echo $error;
+        } else {
+            $questions = one_question($questionId);
+            include('views/display_single_question.php');
+        }
+        break;
+
+    }
+
+    case 'view_others_questions':
+    {
+        $userId = $_SESSION['userId'];
+        $userId = filter_input(INPUT_GET, 'userId');
+        if ($userId == NULL) {
+            $error = 'User Id unavailable';
+            echo $error;
+        } else {
+            $questions = all_users_questions($userId);
+            include('views/display_all_questions.php');
+        }
+        break;
+    }
+
     default: {
         $error = 'Unknown Action';
         include('errors/error.php');
