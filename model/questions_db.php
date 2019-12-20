@@ -16,6 +16,29 @@ function get_users_questions($ownerId) {
     return $questions;
 }
 
+function all_users_questions(){
+    global $db;
+    $query = "SELECT * FROM questions";
+    $statement = $db->prepare($query);
+    //$statement->bindValue(':id', $id);
+    $statement->execute();
+    $question = $statement->fetchAll();
+    $statement->closeCursor();
+    return $question;
+}
+
+function one_question($id){
+    global $db;
+    $query = "SELECT * FROM questions WHERE id=:id";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':id', $id);
+    $statement->execute();
+    $question = $statement->fetchAll();
+    $statement->closeCursor();
+    return $question;
+
+}
+
 function new_question($userId, $QuestionName, $QuestionBody, $QuestionSkills){
     global $db;
     //sql query
